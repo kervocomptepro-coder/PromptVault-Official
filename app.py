@@ -2,10 +2,11 @@ from flask import Flask, render_template, request, jsonify
 
 app = Flask(__name__)
 
+# These are the "Secret Sauce" prompts people would actually pay for
 PROMPT_DATABASE = {
-    "tiktok": "Act as a viral content creator. Write a 30-second TikTok script about {topic}. Include a hook that starts with 'Why nobody is talking about...' and end with a call to action.",
-    "email": "Write a professional cold email regarding {topic}. Keep it under 100 words with a clear call to action.",
-    "business": "Act as a business consultant. Provide 3 ways to monetize {topic} in 2026 with high profit margins."
+    "tiktok": "Act as a Psychographics Expert. Create a 3-part viral script series about {topic}. Part 1: The Pattern Interrupt. Part 2: The Cognitive Dissonance. Part 3: The Dopamine Reward. Use short, punchy sentences designed for a 2026 attention span.",
+    "email": "Write a 2026 'Invisible Selling' cold email regarding {topic}. Avoid all spam triggers. Use an 'Observation-Insight-Question' framework. Target a C-Suite executive with a value-first approach. Tone: Peer-to-Peer, not subordinate.",
+    "business": "Act as a Silicon Valley VC. Conduct a SWOT analysis for a new venture in {topic}. Identify 3 'Blue Ocean' opportunities and a strategy to build a 'moat' around the business model to prevent AI replication."
 }
 
 @app.route('/')
@@ -16,9 +17,12 @@ def index():
 def generate():
     data = request.json
     category = data.get('category')
-    topic = data.get('topic', 'General')
-    raw_prompt = PROMPT_DATABASE.get(category, "Select a category!")
-    return jsonify({"result": raw_prompt.format(topic=topic)})
+    topic = data.get('topic', 'Emerging Tech')
+    
+    raw_prompt = PROMPT_DATABASE.get(category, "Protocol not found.")
+    final_prompt = raw_prompt.format(topic=topic)
+    
+    return jsonify({"result": final_prompt})
 
 if __name__ == '__main__':
     app.run(debug=True)

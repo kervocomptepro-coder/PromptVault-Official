@@ -1,33 +1,68 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>PromptVault</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PROMPT VAULT | Elite AI Intelligence</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&display=swap" rel="stylesheet">
     <style>
-        body { background: #0f172a; color: white; font-family: sans-serif; text-align: center; padding: 50px; }
-        .box { background: #1e293b; padding: 30px; border-radius: 15px; display: inline-block; width: 400px; }
-        select, input, button { width: 100%; padding: 10px; margin: 5px 0; border-radius: 5px; }
-        #output { margin-top: 20px; background: #0f172a; padding: 10px; display: none; text-align: left; border: 1px solid #38bdf8; }
+        :root { --primary: #00f2ff; --bg: #05070a; --card: rgba(15, 23, 42, 0.8); }
+        body { margin: 0; background: var(--bg); color: white; font-family: 'Space Grotesk', sans-serif; overflow-x: hidden; }
+        .bg-glow { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at 50% 50%, #112240 0%, #05070a 100%); z-index: -1; }
+        .container { max-width: 800px; margin: 100px auto; padding: 20px; }
+        .glass-card { background: var(--card); backdrop-filter: blur(12px); border: 1px solid rgba(0, 242, 255, 0.2); padding: 40px; border-radius: 24px; box-shadow: 0 0 40px rgba(0,0,0,0.5); }
+        h1 { font-size: 3rem; margin: 0; background: linear-gradient(90deg, #fff, var(--primary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: -1px; }
+        p { color: #94a3b8; font-size: 1.1rem; margin-bottom: 30px; }
+        select, input { width: 100%; background: rgba(0,0,0,0.3); border: 1px solid #334155; padding: 15px; border-radius: 12px; color: white; margin-bottom: 15px; font-size: 1rem; box-sizing: border-box; }
+        button { width: 100%; padding: 18px; border-radius: 12px; border: none; background: var(--primary); color: #000; font-weight: 700; font-size: 1rem; cursor: pointer; transition: 0.3s; text-transform: uppercase; letter-spacing: 1px; }
+        button:hover { background: #fff; transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0, 242, 255, 0.3); }
+        #output-container { margin-top: 30px; display: none; animation: fadeIn 0.5s ease; }
+        .prompt-result { background: #000; border-left: 4px solid var(--primary); padding: 20px; text-align: left; border-radius: 8px; line-height: 1.6; color: #e2e8f0; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
-    <div class="box">
-        <h1>PromptVault</h1>
-        <select id="cat"><option value="tiktok">TikTok</option><option value="email">Email</option><option value="business">Business</option></select>
-        <input type="text" id="top" placeholder="Topic...">
-        <button onclick="go()">Unlock Prompt</button>
-        <div id="output"></div>
+    <div class="bg-glow"></div>
+    <div class="container">
+        <div class="glass-card">
+            <h1>PROMPT VAULT</h1>
+            <p>Access high-tier AI logic protocols for the 2026 economy.</p>
+            
+            <select id="category">
+                <option value="tiktok">Viral Media Architect</option>
+                <option value="email">High-Ticket Conversion Email</option>
+                <option value="business">SaaS Monetization Logic</option>
+            </select>
+            
+            <input type="text" id="topic" placeholder="Enter Core Subject (e.g. Bio-Tech, Autonomous Logistics)">
+            
+            <button onclick="generatePrompt()">Unlock Intelligence</button>
+
+            <div id="output-container">
+                <p style="color: var(--primary); font-size: 0.8rem; font-weight: bold;">[ PROTOCOL UNLOCKED ]</p>
+                <div class="prompt-result" id="result-text"></div>
+            </div>
+        </div>
     </div>
+
     <script>
-        function go() {
+        function generatePrompt() {
+            const category = document.getElementById('category').value;
+            const topic = document.getElementById('topic').value;
+            if(!topic) return alert("Enter a topic, Boss.");
+
             fetch('/generate', {
                 method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({category: document.getElementById('cat').value, topic: document.getElementById('top').value})
-            }).then(r => r.json()).then(data => {
-                document.getElementById('output').style.display = 'block';
-                document.getElementById('output').innerText = data.result;
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ category, topic })
+            })
+            .then(res => res.json())
+            .then(data => {
+                document.getElementById('output-container').style.display = 'block';
+                document.getElementById('result-text').innerText = data.result;
             });
         }
     </script>
 </body>
+</html>
 </html>
