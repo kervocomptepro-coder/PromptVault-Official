@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>PromptVault</title>
+    <style>
+        body { background: #0f172a; color: white; font-family: sans-serif; text-align: center; padding: 50px; }
+        .box { background: #1e293b; padding: 30px; border-radius: 15px; display: inline-block; width: 400px; }
+        select, input, button { width: 100%; padding: 10px; margin: 5px 0; border-radius: 5px; }
+        #output { margin-top: 20px; background: #0f172a; padding: 10px; display: none; text-align: left; border: 1px solid #38bdf8; }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <h1>PromptVault</h1>
+        <select id="cat"><option value="tiktok">TikTok</option><option value="email">Email</option><option value="business">Business</option></select>
+        <input type="text" id="top" placeholder="Topic...">
+        <button onclick="go()">Unlock Prompt</button>
+        <div id="output"></div>
+    </div>
+    <script>
+        function go() {
+            fetch('/generate', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({category: document.getElementById('cat').value, topic: document.getElementById('top').value})
+            }).then(r => r.json()).then(data => {
+                document.getElementById('output').style.display = 'block';
+                document.getElementById('output').innerText = data.result;
+            });
+        }
+    </script>
+</body>
+</html>
