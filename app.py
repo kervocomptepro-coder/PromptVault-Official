@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, jsonify
 
 app = Flask(__name__)
 
-# These are the "Secret Sauce" prompts people would actually pay for
+# The 2026 Elite Prompt Database
 PROMPT_DATABASE = {
     "tiktok": "Act as a Psychographics Expert. Create a 3-part viral script series about {topic}. Part 1: The Pattern Interrupt. Part 2: The Cognitive Dissonance. Part 3: The Dopamine Reward. Use short, punchy sentences designed for a 2026 attention span.",
     "email": "Write a 2026 'Invisible Selling' cold email regarding {topic}. Avoid all spam triggers. Use an 'Observation-Insight-Question' framework. Target a C-Suite executive with a value-first approach. Tone: Peer-to-Peer, not subordinate.",
